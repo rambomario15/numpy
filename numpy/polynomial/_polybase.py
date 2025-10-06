@@ -320,9 +320,9 @@ class ABCPolyBase(abc.ABC):
         self._symbol = symbol
 
     def __repr__(self):
-        coef = repr(self.coef)[6:-1]
-        domain = repr(self.domain)[6:-1]
-        window = repr(self.window)[6:-1]
+        coef = repr(self.coef.tolist())
+        domain = repr(self.domain.tolist())
+        window = repr(self.window.tolist())
         name = self.__class__.__name__
         return (f"{name}({coef}, domain={domain}, window={window}, "
                 f"symbol='{self.symbol}')")
