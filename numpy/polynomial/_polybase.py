@@ -320,11 +320,19 @@ class ABCPolyBase(abc.ABC):
         self._symbol = symbol
 
     def __repr__(self):
+        # Converts arrays to lists before repr, avoiding
+        # assumptions about NumPy array string formatting
         coef = repr(self.coef.tolist())
         domain = repr(self.domain.tolist())
         window = repr(self.window.tolist())
         name = self.__class__.__name__
-        return (f"{name}({coef}, domain={domain}, window={window}, "
+
+        # Optionally include dtype if coef has a non-float64 type
+        dtype = ""
+        if self.coef.dtype != np.float64:
+            dtype = f"dtype={self.coef.dtype}, "
+
+        return (f"{name}({coef}, {dtype}domain={domain}, window={window}, "
                 f"symbol='{self.symbol}')")
 
     def __format__(self, fmt_str):
